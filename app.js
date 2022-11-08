@@ -1,4 +1,4 @@
-const port = 8090;
+const port = 80;
 const express = require('express');
 const app = express();
 const path = require('path');
@@ -20,21 +20,6 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(cors());
 
-// const data = [{
-// 	timestamp: 1667518579632,
-// 	title: "hello world",
-// 	filename: "1667518579632|hello world.mp4"
-// },
-// {
-// 	timestamp: 1667518817563,
-// 	title: "Test Two",
-// 	filename: "1667518817563|Test Two.mp4"
-// },
-// {
-// 	timestamp: 1667518836132,
-// 	title: "Sample Three",
-// 	filename: "1667518836132|Sample Three.mp4"
-// }]
 //You can use this to check if your server is working
 app.get('/', (req, res) => {
   fs.readdir(directoryPath, function(err, files) {
