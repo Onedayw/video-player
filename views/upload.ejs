@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Video Playlist Tutorial</title>
+
+  <!-- custom css file link  -->
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+  <div class="container">
+    <div>
+      <h3 class="main-vid-subtitle">Speed:
+        <button onclick="setPlaySpeed(this, 0.8)" type="button" class="unselected-button">0.8</button>
+        <button onclick="setPlaySpeed(this, 0.9)" type="button" class="unselected-button">0.9</button>
+        <button onclick="setPlaySpeed(this, 1)" type="button" id="default-button" class="selected-button">1</button>
+        <button onclick="setPlaySpeed(this, 1.1)" type="button" class="unselected-button">1.1</button>
+        <button onclick="setPlaySpeed(this, 1.2)" type="button" class="unselected-button">1.2</button>
+        <button onclick="setPlaySpeed(this, 1.5)" type="button" class="unselected-button">1.5</button>
+        <button onclick="setPlaySpeed(this, 1.8)" type="button" class="unselected-button">1.8</button>
+      </h3>
+    </div>
+    <div class="main-video-container">
+      <video src="images/<%= data[0].filename %>" controls loop autoplay webkit-playsinline playsinline class="main-video"></video>
+      <h3 class="main-vid-title"><%= data[0].title %></h3>
+    </div>
+
+    <div class="video-list-container">
+      <% data.forEach(function (element, i) { %>
+        <% if (i == 0) { %><div class="list active">
+        <% } else { %><div class="list"><% } %>
+          <video src="images/<%= element.filename %>" class="list-video" id="<%= element.timestamp %>"></video>
+          <h3 class="list-title"><%= element.title %></h3>
+
+          <form action="/fileDelete" enctype="multipart/form-data" class="delete-form" method="POST"
+            onsubmit="return confirm('Do you really want to submit the form?');">
+            <button name="delete_filename" value="<%= element.filename %>"
+              class="delete-button" <% if (i == 0) { %>hidden<% } %>>
+            </button>
+          </form>
+
+        </div>
+      <% }) %>
+    </div>
+
+    <div>
+      <form action="/fileUpload" enctype="multipart/form-data" method="POST">
+        <span class="list-title">Video title: </span>
+        <input type="text" id="video-title" name="video_title" required>
+        <input type="file" id="actual-btn" accept=".mp4" name="uploaded_file" required hidden>
+        <label for="actual-btn">Choose File</label>
+        <span id="file-chosen">No file chosen</span>
+        <input type="submit" id="submit-btn" hidden>
+        <label for="submit-btn">Submit</label>
+      </form>
+    </div>
+
+  </div>
+
+  <!-- custom js file link  -->
+  <script src="js/script.js"></script>
+
+</body>
+
+</html>
