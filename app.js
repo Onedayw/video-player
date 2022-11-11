@@ -5,6 +5,7 @@ const path = require('path');
 const cors = require('cors');
 const multer = require('multer');
 const fs = require('fs');
+const alert = require('alert');
 // const util = require('util');
 // const unlinkAsync = util.promisify(fs.unlink);
 
@@ -94,7 +95,9 @@ app.post('/fileUpload', function(req, res, next) {
       next(err);
     } else {
       // SUCCESS, video successfully uploaded
-      res.send('Success, video uploaded!');
+      //res.send('Success, video uploaded!');
+      alert('Success, video uploaded!');
+      res.redirect('/');
     }
   })
 });
@@ -105,6 +108,8 @@ app.post('/fileDelete', multer().none(), function(req, res, next) {
       console.log('unlink failed', err);
     } else {
       console.log('file deleted');
+      alert('Success, video deleted!');
+      res.redirect('/');
     }
   };
   let filepath = directoryPath + req.body.delete_filename;
