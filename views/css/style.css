@@ -141,10 +141,11 @@ body {
   font-family: 'Poppins', sans-serif;
 }
 
-.container #video-title {
+.container .file-upload-container #video-title {
   font-size: 20px;
   color: #444;
   font-family: 'Poppins', sans-serif;
+  width: 30rem;
 }
 
 label {
@@ -160,10 +161,6 @@ label {
 #file-chosen {
   margin-left: 0.3rem;
   font-family: sans-serif;
-}
-
-#video-title {
-  width: 30em;
 }
 
 @media (max-width:1200px) {
@@ -202,5 +199,9 @@ label {
   .container .video-list-container .list .list-title {
     font-size: 15px;
     text-align: center;
+  }
+
+  .container .file-upload-container #video-title {
+    width: auto;
   }
 }
