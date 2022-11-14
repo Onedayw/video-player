@@ -9,6 +9,7 @@
 
   <!-- custom css file link  -->
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 </head>
 
@@ -23,31 +24,75 @@
         <button onclick="setPlaySpeed(this, 1.5)" type="button" class="unselected-button">1.5</button>
         <button onclick="setPlaySpeed(this, 1.8)" type="button" class="unselected-button">1.8</button>
       </h3>
+      <h3 class="main-vid-subtitle">Repeat
+        <button onclick="setRepeat(this, 1)" type="button" class="unselected-button">1</button>
+        <button onclick="setRepeat(this, 2)" type="button" class="unselected-button">2</button>
+        <button onclick="setRepeat(this, 3)" type="button" class="unselected-button">3</button>
+        <button onclick="setRepeat(this, 4)" type="button" class="unselected-button">4</button>
+        <button onclick="setRepeat(this, 5)" type="button" class="unselected-button">5</button>
+        <button onclick="setRepeat(this, 0)" type="button" class="selected-button" id="default-button" >&#8734;</button>
+      </h3>
     </div>
 
     <div class="main-video-container">
-      <video src="images/<%= data[0].filename %>" controls loop webkit-playsinline playsinline class="main-video"></video>
-      <h3 class="main-vid-title"><%= data[0].title %></h3>
+      <video src="images/<%= data1[0].list%>/<%= data1[0].filename %>" controls loop webkit-playsinline playsinline class="main-video"></video>
+      <h3 class="main-vid-title"><%= data1[0].title %></h3>
     </div>
 
-    <div class="video-list-container">
-      <% data.forEach(function (element, i) { %>
-        <% if (i == 0) { %><div class="list active">
-        <% } else { %><div class="list"><% } %>
-          <video src="images/<%= element.filename %>" class="list-video" id="<%= element.timestamp %>"></video>
-          <h3 class="list-title"><%= i+1 + ' - ' + element.title %></h3>
-
-          <form action="/fileDelete" enctype="multipart/form-data" class="delete-form" method="POST" onsubmit="return confirm('Do you really want to submit the form?');">
-            <button name="delete_filename" value="<%= element.filename %>" class="delete-button" <% if (i == 0) { %>hidden<% } %>>
-            </button>
-          </form>
-
-        </div>
-      <% }) %>
+    <div class="video-list-wrapper">
+      <div class="video-list-bar w3-bar w3-black">
+        <button class="video-list-nav-button w3-bar-item w3-button" onclick="openList('video-list-container-1')">LIST 1</button>
+        <button class="video-list-nav-button w3-bar-item w3-button" onclick="openList('video-list-container-2')">LIST 2</button>
+        <button class="video-list-nav-button w3-bar-item w3-button" onclick="openList('video-list-container-3')">LIST 3</button>
+      </div>
+      <div id="video-list-container-1" class="video-list-container">
+        <% data1.forEach(function (element, i) { %>
+          <% if (i == 0) { %><div class="list active">
+          <% } else { %><div class="list"><% } %>
+            <video src="images/list1/<%= element.filename %>" class="list-video" id="<%= element.timestamp %>"></video>
+            <h3 class="list-title"><%= i+1 + ' - ' + element.title %></h3>
+            <form action="/fileDelete" enctype="multipart/form-data" class="delete-form" method="POST" onsubmit="return confirm('Do you really want to submit the form?');">
+              <button name="delete_filename" value="list1/<%= element.filename %>" class="delete-button" <% if (i == 0) { %>hidden<% } %>>
+              </button>
+            </form>
+          </div>
+        <% }) %>
+      </div>
+      <div id="video-list-container-2" class="video-list-container" style="display:none">
+        <% data2.forEach(function (element, i) { %>
+          <% if (i == 0) { %><div class="list active">
+          <% } else { %><div class="list"><% } %>
+            <video src="images/list2/<%= element.filename %>" class="list-video" id="<%= element.timestamp %>"></video>
+            <h3 class="list-title"><%= i+1 + ' - ' + element.title %></h3>
+            <form action="/fileDelete" enctype="multipart/form-data" class="delete-form" method="POST" onsubmit="return confirm('Do you really want to submit the form?');">
+              <button name="delete_filename" value="list2/<%= element.filename %>" class="delete-button" <% if (i == 0) { %>hidden<% } %>>
+              </button>
+            </form>
+          </div>
+        <% }) %>
+      </div>
+      <div id="video-list-container-3" class="video-list-container" style="display:none">
+        <% data3.forEach(function (element, i) { %>
+          <% if (i == 0) { %><div class="list active">
+          <% } else { %><div class="list"><% } %>
+            <video src="images/list3/<%= element.filename %>" class="list-video" id="<%= element.timestamp %>"></video>
+            <h3 class="list-title"><%= i+1 + ' - ' + element.title %></h3>
+            <form action="/fileDelete" enctype="multipart/form-data" class="delete-form" method="POST" onsubmit="return confirm('Do you really want to submit the form?');">
+              <button name="delete_filename" value="list3/<%= element.filename %>" class="delete-button" <% if (i == 0) { %>hidden<% } %>>
+              </button>
+            </form>
+          </div>
+        <% }) %>
+      </div>
     </div>
 
     <div class="file-upload-container">
       <form action="/fileUpload" enctype="multipart/form-data" method="POST">
+        <select name="list_index" id="list-index" required>
+          <option value="list1">LIST 1</option>
+          <option value="list2">LIST 2</option>
+          <option value="list3">LIST 3</option>
+        </select>
         <span class="list-title">Video title: </span>
         <input type="text" id="video-title" name="video_title" required>
         <input type="file" id="actual-btn" accept=".mp4" name="uploaded_file" required hidden>

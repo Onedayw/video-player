@@ -34,6 +34,15 @@ function setPlaySpeed(element, x) {
   element.classList.remove('unselected-button');
 }
 
+function openList(listId) {
+  var i;
+  var x = document.getElementsByClassName("video-list-container");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+  }
+  document.getElementById(listId).style.display = "block";
+}
+
 const actualBtn = document.getElementById('actual-btn');
 const fileChosen = document.getElementById('file-chosen');
 

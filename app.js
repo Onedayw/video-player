@@ -5,9 +5,10 @@ const path = require('path');
 const cors = require('cors');
 const multer = require('multer');
 const fs = require('fs');
+const fsPromises = fs.promises;
+const util = require('util');
+const stat = util.promisify(fs.stat);
 const alert = require('alert');
-// const util = require('util');
-// const unlinkAsync = util.promisify(fs.unlink);
 
 const directoryPath = path.join(__dirname, '/views/images/');
 
@@ -21,39 +22,60 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(cors());
 
-//You can use this to check if your server is working
-app.get('/', (req, res) => {
-  fs.readdir(directoryPath, function(err, files) {
-    let data = [];
-
-    if (err) {
-      res.writeHead(404);
-      res.write('File not found');
-      return console.log('Unable to scan directory: ' + err);
+async function getFiles(dir) {
+  const subdirs = await fsPromises.readdir(dir);
+  const files = await Promise.all(subdirs.map(async (subdir) => {
+    const fullPath = path.resolve(dir, subdir);
+    if ((await stat(fullPath)).isDirectory()) {
+      return getFiles((fullPath));
     } else {
-      files.forEach(function(file) {
-        if (file.endsWith(".mp4")) {
-          const strings = file.split("|");
-          data.push({
-            timestamp: strings[0],
-            title: strings[1].slice(0, -4),
-            filename: file
-          });
-        }
-      })
+      if (subdir.endsWith(".mp4")) {
+        const strings = subdir.split("|");
+        return {
+          timestamp: strings[0],
+          title: strings[1].slice(0, -4),
+          filename: subdir,
+          list: dir.substring(dir.length - 5)
+        };
+      }
+      return null;
     }
+  }));
+  return files.reduce((a, f) => a.concat(f), []).filter(n => n);
+}
 
-    // Render HTML with data
-    res.render('upload', {
-      data: data
-    });
-  });
+//You can use this to check if your server is working
+app.get('/', (req, res, next) => {
+  getFiles(directoryPath)
+    .then(files => {
+      let data1 = [];
+      let data2 = [];
+      let data3 = [];
+
+      files.forEach(file => {
+        if (file.list == 'list1') {
+          data1.push(file);
+        } else if (file.list == 'list2') {
+          data2.push(file);
+        } else if (file.list == 'list3') {
+          data3.push(file);
+        }
+      });
+
+      // Render HTML with data
+      res.render('upload', {
+        data1: data1,
+        data2: data2,
+        data3: data3
+      });
+    })
+    .catch(e => console.error(e));
 });
 
 var storage = multer.diskStorage({
   destination: function(req, file, cb) {
     // Uploads is the Upload_folder_name
-    cb(null, directoryPath);
+    cb(null, directoryPath + req.body.list_index);
   },
   filename: function(req, file, cb) {
     cb(null, Date.now() + '|' + req.body.video_title + '.mp4');
