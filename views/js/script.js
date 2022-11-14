@@ -34,6 +34,16 @@ function setPlaySpeed(element, x) {
   element.classList.remove('unselected-button');
 }
 
+// function setRepeat(element, x) {
+//   document.querySelector('.main-video-container .main-video').playbackRate = x;
+//   let selected = document.querySelector('.selected-button');
+//   selected.classList.add('unselected-button');
+//   selected.classList.remove('selected-button');
+//
+//   element.classList.add('selected-button');
+//   element.classList.remove('unselected-button');
+// }
+
 function openList(listId) {
   var i;
   var x = document.getElementsByClassName("video-list-container");
