@@ -46,11 +46,17 @@ function setPlaySpeed(element, x) {
 
 function openList(listId) {
   var i;
-  var x = document.getElementsByClassName("video-list-container");
+  var x = document.getElementsByClassName('video-list-container');
   for (i = 0; i < x.length; i++) {
-    x[i].style.display = "none";
+    x[i].style.display = 'none';
   }
-  document.getElementById(listId).style.display = "block";
+  document.getElementById('video-list-container-' + listId).style.display = "block";
+
+  var y = document.getElementsByClassName("w3-bar-item w3-button");
+  for (i = 0; i < y.length; i++) {
+    y[i].classList.remove('active-nav-button');
+  }
+  document.getElementById('video-list-nav-button-' + listId).classList.add = "block";
 }
 
 const actualBtn = document.getElementById('actual-btn');

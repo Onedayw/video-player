@@ -41,9 +41,12 @@
 
     <div class="video-list-wrapper">
       <div class="video-list-bar w3-bar w3-black">
-        <button class="video-list-nav-button w3-bar-item w3-button" onclick="openList('video-list-container-1')">LIST 1</button>
-        <button class="video-list-nav-button w3-bar-item w3-button" onclick="openList('video-list-container-2')">LIST 2</button>
-        <button class="video-list-nav-button w3-bar-item w3-button" onclick="openList('video-list-container-3')">LIST 3</button>
+        <button class="w3-bar-item w3-button active-nav-button" onclick="openList(1)" id="video-list-nav-button-1">LIST 1</button>
+        <button class="w3-bar-item w3-button" onclick="openList(2)" id="video-list-nav-button-2">LIST 2</button>
+        <button class="w3-bar-item w3-button" onclick="openList(3)" id="video-list-nav-button-3">LIST 3</button>
+        <button class="w3-bar-item w3-button" onclick="openList(4)" id="video-list-nav-button-4">LIST 4</button>
+        <button class="w3-bar-item w3-button" onclick="openList(5)" id="video-list-nav-button-5">LIST 5</button>
+        <button class="w3-bar-item w3-button" onclick="openList(6)" id="video-list-nav-button-6">LIST 6</button>
       </div>
       <div id="video-list-container-1" class="video-list-container">
         <% data1.forEach(function (element, i) { %>
@@ -84,6 +87,45 @@
           </div>
         <% }) %>
       </div>
+      <div id="video-list-container-4" class="video-list-container" style="display:none">
+        <% data4.forEach(function (element, i) { %>
+          <% if (i == 0) { %><div class="list active">
+          <% } else { %><div class="list"><% } %>
+            <video src="images/list4/<%= element.filename %>" class="list-video" id="<%= element.timestamp %>"></video>
+            <h3 class="list-title"><%= i+1 + ' - ' + element.title %></h3>
+            <form action="/fileDelete" enctype="multipart/form-data" class="delete-form" method="POST" onsubmit="return confirm('Do you really want to submit the form?');">
+              <button name="delete_filename" value="list4/<%= element.filename %>" class="delete-button" <% if (i == 0) { %>hidden<% } %>>
+              </button>
+            </form>
+          </div>
+        <% }) %>
+      </div>
+      <div id="video-list-container-5" class="video-list-container" style="display:none">
+        <% data5.forEach(function (element, i) { %>
+          <% if (i == 0) { %><div class="list active">
+          <% } else { %><div class="list"><% } %>
+            <video src="images/list5/<%= element.filename %>" class="list-video" id="<%= element.timestamp %>"></video>
+            <h3 class="list-title"><%= i+1 + ' - ' + element.title %></h3>
+            <form action="/fileDelete" enctype="multipart/form-data" class="delete-form" method="POST" onsubmit="return confirm('Do you really want to submit the form?');">
+              <button name="delete_filename" value="list5/<%= element.filename %>" class="delete-button" <% if (i == 0) { %>hidden<% } %>>
+              </button>
+            </form>
+          </div>
+        <% }) %>
+      </div>
+      <div id="video-list-container-6" class="video-list-container" style="display:none">
+        <% data6.forEach(function (element, i) { %>
+          <% if (i == 0) { %><div class="list active">
+          <% } else { %><div class="list"><% } %>
+            <video src="images/list6/<%= element.filename %>" class="list-video" id="<%= element.timestamp %>"></video>
+            <h3 class="list-title"><%= i+1 + ' - ' + element.title %></h3>
+            <form action="/fileDelete" enctype="multipart/form-data" class="delete-form" method="POST" onsubmit="return confirm('Do you really want to submit the form?');">
+              <button name="delete_filename" value="list6/<%= element.filename %>" class="delete-button" <% if (i == 0) { %>hidden<% } %>>
+              </button>
+            </form>
+          </div>
+        <% }) %>
+      </div>
     </div>
 
     <div class="file-upload-container">
@@ -92,6 +134,9 @@
           <option value="list1">LIST 1</option>
           <option value="list2">LIST 2</option>
           <option value="list3">LIST 3</option>
+          <option value="list4">LIST 4</option>
+          <option value="list5">LIST 5</option>
+          <option value="list6">LIST 6</option>
         </select>
         <span class="list-title">Video title: </span>
         <input type="text" id="video-title" name="video_title" required>

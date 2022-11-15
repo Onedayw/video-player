@@ -88,6 +88,10 @@ body {
   padding: 15px;
 }
 
+.container .video-list-wrapper .video-list-bar .active {
+  
+}
+
 .container .video-list-wrapper .video-list-container::-webkit-scrollbar {
   width: 10px;
 }
