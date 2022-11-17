@@ -1,5 +1,6 @@
 let loopTimes = 0;
 let iteration = 0;
+let autoplay = true;
 let videoList = document.querySelectorAll('.video-list-container .list');
 
 videoList.forEach(vid => {
@@ -28,6 +29,13 @@ videoList.forEach(vid => {
         }
         else {
           iteration = 0;
+
+          if (autoplay) {
+            nextVideo = vid.nextElementSibling;
+            if (nextVideo) {
+              nextVideo.click();
+            }
+          }
         }
       }
     };
@@ -62,6 +70,10 @@ function setRepeat() {
   else {
     document.querySelector('.main-video-container .main-video').removeAttribute('loop');
   }
+}
+
+function setAutoplay() {
+  autoplay = document.querySelector('.autoplay-checkbox').checked;
 }
 
 function openList(listId) {
