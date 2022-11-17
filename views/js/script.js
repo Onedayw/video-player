@@ -1,6 +1,7 @@
 let loopTimes = 0;
 let iteration = 0;
 let autoplay = true;
+let playSpeed = 1;
 let videoList = document.querySelectorAll('.video-list-container .list');
 
 videoList.forEach(vid => {
@@ -16,7 +17,7 @@ videoList.forEach(vid => {
     let mainVideo = document.querySelector('.main-video-container .main-video');
     document.querySelector('.main-video-container .main-vid-title').innerHTML = title;
     mainVideo.src = src;
-    mainVideo.onended = function() {
+    mainVideo.onended = function () {
       if (loopTimes == 0) {
         // Loop the video indefinitely
         mainVideo.play();
@@ -39,20 +40,22 @@ videoList.forEach(vid => {
         }
       }
     };
+    mainVideo.playbackRate = playSpeed;
     mainVideo.play()
 
-    let selectedButton = document.querySelector('.selected-button');
-    selectedButton.classList.add('unselected-button');
-    selectedButton.classList.remove('selected-button');
-
-    let defaultButton = document.querySelector('#default-button');
-    defaultButton.classList.add('selected-button');
-    defaultButton.classList.remove('unselected-button');
+    // let selectedButton = document.querySelector('.selected-button');
+    // selectedButton.classList.add('unselected-button');
+    // selectedButton.classList.remove('selected-button');
+    //
+    // let defaultButton = document.querySelector('#default-button');
+    // defaultButton.classList.add('selected-button');
+    // defaultButton.classList.remove('unselected-button');
   };
 });
 
 function setPlaySpeed(element, x) {
   document.querySelector('.main-video-container .main-video').playbackRate = x;
+  playSpeed = x;
   let selected = document.querySelector('.selected-button');
   selected.classList.add('unselected-button');
   selected.classList.remove('selected-button');
@@ -97,3 +100,28 @@ const fileChosen = document.getElementById('file-chosen');
 actualBtn.addEventListener('change', function() {
   fileChosen.textContent = this.files[0].name
 });
+
+let mainVideo = document.querySelector('.main-video-container .main-video');
+mainVideo.onended = function() {
+  if (loopTimes == 0) {
+    // Loop the video indefinitely
+    mainVideo.play();
+  }
+  else {
+    // Play the video for certain times only
+    iteration++;
+    if (iteration <= loopTimes-1) {
+      mainVideo.play();
+    }
+    else {
+      iteration = 0;
+
+      if (autoplay) {
+        nextVideo = videoList[0].nextElementSibling;
+        if (nextVideo) {
+          nextVideo.click();
+        }
+      }
+    }
+  }
+};
