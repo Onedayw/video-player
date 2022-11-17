@@ -1,3 +1,5 @@
+let loopTimes = 0;
+let iteration = 0;
 let videoList = document.querySelectorAll('.video-list-container .list');
 
 videoList.forEach(vid => {
@@ -10,9 +12,26 @@ videoList.forEach(vid => {
     let src = vid.querySelector('.list-video').src;
     let title = vid.querySelector('.list-title').innerHTML;
     vid.querySelector('.delete-form .delete-button').setAttribute('hidden', true);
+    let mainVideo = document.querySelector('.main-video-container .main-video');
     document.querySelector('.main-video-container .main-vid-title').innerHTML = title;
-    document.querySelector('.main-video-container .main-video').src = src;
-    document.querySelector('.main-video-container .main-video').play();
+    mainVideo.src = src;
+    mainVideo.onended = function() {
+      if (loopTimes == 0) {
+        // Loop the video indefinitely
+        mainVideo.play();
+      }
+      else {
+        // Play the video for certain times only
+        iteration++;
+        if (iteration <= loopTimes-1) {
+          mainVideo.play();
+        }
+        else {
+          iteration = 0;
+        }
+      }
+    };
+    mainVideo.play()
 
     let selectedButton = document.querySelector('.selected-button');
     selectedButton.classList.add('unselected-button');
@@ -34,15 +53,16 @@ function setPlaySpeed(element, x) {
   element.classList.remove('unselected-button');
 }
 
-// function setRepeat(element, x) {
-//   document.querySelector('.main-video-container .main-video').playbackRate = x;
-//   let selected = document.querySelector('.selected-button');
-//   selected.classList.add('unselected-button');
-//   selected.classList.remove('selected-button');
-//
-//   element.classList.add('selected-button');
-//   element.classList.remove('unselected-button');
-// }
+function setRepeat() {
+  loopTimes = parseInt(document.getElementById('video-repeat-times').value);
+
+  if (loopTimes == 0) {
+    document.querySelector('.main-video-container .main-video').setAttribute('loop', true);
+  }
+  else {
+    document.querySelector('.main-video-container .main-video').removeAttribute('loop');
+  }
+}
 
 function openList(listId) {
   var i;
