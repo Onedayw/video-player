@@ -142,8 +142,8 @@ input:checked + .autoplay-slider-round:before {
   padding: 15px;
 }
 
-.container .video-list-wrapper .video-list-bar .active {
-
+.container .video-list-wrapper .video-list-bar .active-nav-button {
+  background-color: #1746A2;
 }
 
 .container .video-list-wrapper .video-list-container::-webkit-scrollbar {

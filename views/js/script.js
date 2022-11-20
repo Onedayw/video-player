@@ -91,7 +91,13 @@ function openList(listId) {
   for (i = 0; i < y.length; i++) {
     y[i].classList.remove('active-nav-button');
   }
-  document.getElementById('video-list-nav-button-' + listId).classList.add = "block";
+  document.getElementById('video-list-nav-button-' + listId).classList.add("active-nav-button");
+
+  localStorage.setItem("active-list", listId);
+}
+
+if (localStorage.getItem("active-list")) {
+  openList(localStorage.getItem("active-list"));
 }
 
 const actualBtn = document.getElementById('actual-btn');
