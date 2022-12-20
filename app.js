@@ -54,6 +54,8 @@ app.get('/', (req, res, next) => {
       let data4 = [];
       let data5 = [];
       let data6 = [];
+      let data7 = [];
+      let data8 = [];
 
       files.forEach(file => {
         if (file.list == 'list1') {
@@ -68,17 +70,23 @@ app.get('/', (req, res, next) => {
           data5.push(file);
         } else if (file.list == 'list6') {
           data6.push(file);
+        } else if (file.list == 'list7') {
+          data7.push(file);
+        } else if (file.list == 'list8') {
+          data8.push(file);
         }
       });
 
       // Render HTML with data
       res.render('upload', {
-        data1: data1,
-        data2: data2,
-        data3: data3,
-        data4: data4,
-        data5: data5,
-        data6: data6
+        data1: data1.reverse(),
+        data2: data2.reverse(),
+        data3: data3.reverse(),
+        data4: data4.reverse(),
+        data5: data5.reverse(),
+        data6: data6.reverse(),
+        data7: data7.reverse(),
+        data8: data8.reverse()
       });
     })
     .catch(e => console.error(e));
