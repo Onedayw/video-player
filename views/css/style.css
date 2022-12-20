@@ -146,6 +146,10 @@ input:checked + .autoplay-slider-round:before {
   background-color: #1746A2;
 }
 
+.video-list-wrapper .video-list-bar .w3-bar-item{
+  padding: 8px 8px;
+}
+
 .container .video-list-wrapper .video-list-container::-webkit-scrollbar {
   width: 10px;
 }
@@ -269,9 +273,5 @@ label {
 
   .container .main-vid-subtitle {
     font-size: 14px;
-  }
-
-  .video-list-wrapper .video-list-bar .w3-bar-item{
-    padding: 8px 8px;
   }
 }
